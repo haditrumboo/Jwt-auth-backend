@@ -6,6 +6,21 @@ const app = express();
 app.use(express.json());
 const users = [];
 
+function authtoken(req, res, next) {
+    const token = req.headers.token;
+    try {
+        const decoded = jwt.verify(token, secretkey);
+        req.username = decoded.username;
+        next()
+    }
+    catch (err) {
+        res.json({ message: "invalid token" });
+    }
+}
+
+
+
+
 
 
 
@@ -49,13 +64,11 @@ app.post('/signingin', (req, res) => {
     console.log(users);
 });
 
-app.get('/me', (req, res) => {
-    const token =  req.headers.token;
-    const decoded = jwt.verify(token, secretkey);
-    const username = decoded.username;
-    const user = users.find(u => u.username === username);
+app.get('/me', authtoken, (req, res) => {
+ 
+    const user = users.find(u => u.username === req.username);
     if (user) {
-        res.json({username: user.username, password: user.password});
+        res.json({ username: user.username, password: user.password });
     }
 })
 app.listen(3000);
