@@ -39,17 +39,30 @@ function authtoken(req, res, next) {
 
 
 
-app.post('/signingup', (req, res) => {
-    const { username, password } = req.body;
-    users.push({ username, password });
-    res.json({ message: "user signed up successfully" });
-    if (username.length < 5) {
-        res.json({ message: "username must be at least 5 characters long" });
-        return;
-    }
-    console.log(users);
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
 });
-app.post('/signingin', (req, res) => {
+app.post("/signup", (req, res) => {
+
+    const { username, password } = req.body;
+
+    if (username.length < 5) {
+        return res.json({
+            message: "username must be at least 5 characters long"
+        });
+    }
+
+    users.push({ username, password });
+
+    console.log(users);
+
+    res.json({
+        message: "user signed up successfully"
+    });
+
+});
+
+app.post('/signin', (req, res) => {
     const { username, password } = req.body;
     const user = users.find(u => u.username === username && u.password === password);
     if (user) {

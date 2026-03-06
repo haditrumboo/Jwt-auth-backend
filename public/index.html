@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
+    <title>signup</title>
+<script>
+async function signup() {
+
+    const username = document.getElementById('signup-username').value
+    const password = document.getElementById('signup-password').value
+
+    try {
+
+        const response = await axios.post('http://localhost:3000/signup', {
+            username: username,
+            password: password
+        })
+
+        alert(response.data.message)
+
+    } catch (error) {
+
+        alert("Signup failed")
+
+    }
+
+}
+async function signin() {
+
+    const username = document.getElementById('signin-username').value
+    const password = document.getElementById('signin-password').value
+
+    try {
+
+        const response = await axios.post('http://localhost:3000/signin', {
+            username: username,
+            password: password
+        })
+
+        alert(response.data.message)
+
+    } catch (error) {
+
+        alert("Signin failed")
+
+    }
+
+}
+</script>
+
+
+</head>
+<body>
+  
+  <h3>Signup</h3>
+<input id="signup-username" placeholder="Enter email" type="text">
+<input id="signup-password" placeholder="Enter password" type="password">
+<button onclick="signup()">signup</button>
+
+<h3>Signin</h3>
+<input id="signin-username" placeholder="Enter email" type="text">
+<input id="signin-password" placeholder="Enter password" type="password">
+<button onclick="signin()">signin</button>
+
+
+</body>
+</html>
