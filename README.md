@@ -12,6 +12,8 @@ A beginner-friendly authentication backend built with Node.js, Express, MongoDB,
 - Node.js
 - Express.js
 - JWT
+- axios
+- html
 
 ## Setup
 
