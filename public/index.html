@@ -40,14 +40,31 @@ async function signin() {
         })
 
         alert(response.data.message)
+        localStorage.setItem("token", response.data.token);
 
     } catch (error) {
 
         alert("Signin failed")
 
     }
+    
 
+} 
+async function pinfo () {
+
+    const token = localStorage.getItem('token');
+
+    const response = await axios.get('http://localhost:3000/me', {
+        headers: {
+            token: token
+        }
+    });
+
+    document.getElementById('information').innerHTML =
+        "Username: " + response.data.username + "<br>" +
+        "Password: " + response.data.password;
 }
+
 </script>
 
 
@@ -64,6 +81,10 @@ async function signin() {
 <input id="signin-password" placeholder="Enter password" type="password">
 <button onclick="signin()">signin</button>
 
+<h1>user info</h1>
+<div id="information">
+<button onclick="pinfo()">Get Info</button>
+</div>
 
 </body>
 </html>
